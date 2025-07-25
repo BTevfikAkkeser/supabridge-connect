@@ -29,6 +29,26 @@ const ProductCard = ({ product }: ProductCardProps) => {
     window.open(whatsappUrl, '_blank');
   };
 
+  const handleStripeCheckout = async (product: ProductCardProps["product"]) => {
+    try {
+      const response = await fetch("http://localhost:4242/create-checkout-session", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ product }),
+      });
+      const data = await response.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert("Stripe ödeme oturumu başlatılamadı: " + (data.error || "Bilinmeyen hata"));
+      }
+    } catch (error) {
+      alert("Stripe ödeme hatası: " + error);
+    }
+  };
+
   return (
     <Card className="group hover:shadow-lg transition-all duration-300 hover:scale-105 border-0 bg-card/50 backdrop-blur-sm">
       <CardContent className="p-0">
@@ -87,6 +107,13 @@ const ProductCard = ({ product }: ProductCardProps) => {
           >
             <ShoppingCart className="w-4 h-4" />
             WhatsApp ile Sipariş Ver
+          </Button>
+          <Button 
+            onClick={() => handleStripeCheckout(product)}
+            className="w-full gap-2 mt-2 bg-blue-600 hover:bg-blue-700 text-white"
+          >
+            <ShoppingCart className="w-4 h-4" />
+            Kredi Kartı ile Satın Al
           </Button>
         </div>
       </CardContent>
