@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const SUPABASE_URL = "https://bvbsjfhuclqjzconvqml.supabase.co/storage/v1/object/public/mutlu-hediyem/";
+const SUPABASE_URL = "https://bvbsjfhuclqjzconvqml.supabase.co/storage/v1/object/public/ai-urun-gorselleri/";
 
 interface AIImage {
   product: string;
